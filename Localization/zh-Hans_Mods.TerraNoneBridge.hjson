@@ -1,0 +1,355 @@
+Configs: {
+	ServerConfig: {
+		DisplayName: TerraLink 服务端配置
+
+		Headers: {
+			ConnectionSettings: 连接设置
+			FeatureSwitches: 功能开关
+			ExportSettings: 资源导出设置
+		}
+
+		IpAddress: {
+			Label: WebSocket 地址
+			Tooltip: Nonebot 插件监听的 IP 地址
+		}
+
+		Port: {
+			Label: WebSocket 端口
+			Tooltip: 对应 Nonebot 插件配置的端口 (1-65535)
+		}
+
+		AccessToken: {
+			Label: 访问令牌 (Token)
+			Tooltip: 必须与 Nonebot 端 .env 中的 Key 一致，用于鉴权绑定
+		}
+
+		ReconnectInterval: {
+			Label: 断线重连间隔 (秒)
+			Tooltip: 连接断开后的重试等待时间。设为 0 表示不自动重连。
+		}
+
+		EnableChatSync: {
+			Label: 启用聊天同步
+			Tooltip: 是否允许 QQ 群消息与游戏内聊天互通
+		}
+
+		EnableEventBroadcast: {
+			Label: 启用事件播报
+			Tooltip: 是否播报玩家加入、离开、世界加载等系统事件
+		}
+
+		CustomExportPath: {
+			Label: 自定义导出路径
+			Tooltip:
+				'''
+				设置 /tnb exportassets 指令的输出目录。
+				留空: 默认导出到 "TerraNoneBridge_Exports/时间戳" (每次新建文件夹)
+				填入路径: 导出到指定文件夹 (适合覆盖更新)。支持相对路径(相对于tModLoader存档目录)或绝对路径。
+				'''
+		}
+	}
+}
+
+Common: {
+	Day: 白天
+	Night: 夜晚
+	Unknown: 未知
+	None: (无)
+	Empty: (空)
+
+	Difficulty: {
+		Normal: 普通
+		Hardmode: 困难模式
+		Expert: 专家模式
+		Master: 大师模式
+	}
+}
+
+MoonPhase: {
+	0: 满月
+	1: 亏凸月
+	2: 下弦月
+	3: 残月
+	4: 新月
+	5: 蛾眉月
+	6: 上弦月
+	7: 盈凸月
+}
+
+Log: {
+	CommandRegistered: "[TerraNoneBridge] 注册指令: /{0} (IsModify: {1})"
+	CommandExecError: 指令 {0} 执行异常: {1}
+	PacketError: 数据包错误: {0}
+	PacketDispatchError: 数据包分发错误: {0}
+	MainThreadPacketError: 主线程数据包错误: {0}
+	BossChecklistError: BossChecklist 集成失败: {0}
+}
+
+Commands: {
+	Tnb: {
+		Desc: TerraNoneBridge 模组主指令。输入 /tnb help 查看子指令。
+		UsageHint: 请输入子指令。例如: /tnb help, /tnb tps
+	}
+
+	Common: {
+		ServerName: 系统
+		Unknown: 未知
+		NoPermission: 无权执行此操作。
+		PlayerNotFound: 未找到玩家: {0}
+		PlayerNotOnline: 玩家不在线。
+		ItemNotFound: 未找到物品: {0}
+		BuffNotFound: 未找到 Buff: {0}
+		InvalidArgs: 参数无效。
+		MultiResult: 找到多个结果，请更精确或使用 ID: {0}
+		ExecError: 执行错误: {0}
+		UnknownCommand: 未知指令: {0} (输入 /tnb help 查看列表)
+	}
+
+	// --- Management Commands ---
+	
+	Export: {
+		Desc: 导出游戏纹理资源
+		Usage: 用法: /tnb exportassets (路径请在模组配置中设置)
+		ErrorServer: 错误: 无法在专用服务器(Dedicated Server)上导出资源，因为纹理未加载。请在 Host&Play 或单人模式下使用。
+		Busy: 导出任务正在进行中，请稍后。
+		Start: 开始导出资源... 目标路径: {1}
+		Progress: 导出进度: {0}% ({1}/{2})
+		Complete: 导出完成！共处理 {0} 个文件。保存在: {1}
+		ErrorCreateDir: 创建目录失败: {0}
+		CopyrightNotice:
+			'''
+			警告: 版权声明
+			=========================
+			此文件夹中包含的资源归 Re-Logic (Terraria)
+			或其各自的模组作者所有。
+
+			请勿非法分发这些资源。
+			这些文件仅供教育、研究或个人使用导出。
+			'''
+		ModeAll: (全部资源)
+		ModeCore: (仅核心资源: 物品/NPC/Buff)
+	}
+
+	Buff: {
+		Desc: 给玩家添加Buff
+		Usage: 用法: /tnb buff <玩家名/all> <Buff名/ID> [时间(秒)]
+		Success: 已给 {0} 添加 [{1}] ({2}秒)
+	}
+
+	Butcher: {
+		Desc: 杀灭所有敌对生物
+		Success: 已清理 {0} 个敌对生物。
+	}
+
+	Give: {
+		Desc: 给予物品
+		Usage: 用法: /tnb give <玩家名> <物品名> [数量]
+		Success: 已给予 {0} {1}个 [{2}]
+		NoItem: 未找到物品。
+		Multiple: 找到多个物品，请更精确: {0}
+	}
+
+	Kick: {
+		Desc: 踢出玩家
+		Usage: 用法: /tnb kick <玩家名> [原因]
+		Success: 已踢出玩家: {0}
+		ReasonDefault: 被管理员移除
+		DefaultReason: 被管理员移除
+	}
+
+	Save: {
+		Desc: 保存世界
+		Success: 世界存档已保存。
+	}
+
+	Settle: {
+		Desc: 强制液体沉降
+		Success: 液体已强制沉降。
+	}
+
+	Time: {
+		Desc: 修改时间
+		Usage: 用法: dawn, noon, dusk, midnight
+		Success: 时间已更新: {0}
+		Set: 时间已修改为 {0}
+		Query: 当前时间: {0} ({1}) | 月相: {2}
+	}
+
+	Heal: {
+		SuccessSingle: 已治疗: {0}
+		SuccessAll: 已治疗所有玩家。
+	}
+
+	// --- Info Commands ---
+	
+	Help: {
+		Desc: 显示帮助
+		Header: === TerraLink 指令列表 ===
+		NotFound: 未找到指令: {0}
+	}
+
+	Inv: {
+		Desc: 查看玩家背包
+		Usage: 用法: /tnb inv <玩家名>
+		NotOnline: 玩家不在线。
+		Header: "{0} 的背包信息:"
+	}
+
+	List: {
+		Desc: 查看在线玩家
+		Empty: 当前无人在线。
+		Header: 在线玩家 ({0}/{1}): {2}
+	}
+
+	Search: {
+		Desc: 搜索物品或Buff ID
+		Usage: 用法: /tnb search <关键词>
+		HeaderItem: 物品结果 ({0}个):
+		HeaderBuff: Buff 结果 ({0}个):
+		None: 未找到包含 '{0}' 的内容。
+		Hint: 提示: 使用 /tnb query <ID> 查详情，或 /tnb buff <玩家> <ID> 给状态。
+		Found: 找到 {0} 个结果:
+	}
+
+	Query: {
+		Desc: 查询物品详细数据与合成表
+		Usage: 用法: /tnb query <物品名或ID>
+		Success: 查询成功
+		Multiple:
+			'''
+			找到多个物品，请使用 ID 查询:
+			{0}
+			'''
+	}
+
+	Recipe: {
+		Desc: 查询物品合成表与用途
+		Success: 查询成功
+	}
+
+	Boss: {
+		Desc: 查看 Boss 击杀进度
+		Header: === {0} 进度报告 ===
+		Mode: 模式: {0}
+		ModeHard: 困难模式
+		ModePre: 肉山前
+		ModeExpert: " | 专家"
+		ModeMaster: " | 大师"
+		SourceMod: "[统计来源: BossChecklist]"
+		SourceVanilla: "[统计来源: 原版]"
+		ListDefeatedBoss: 【已击败 Boss】
+		ListUndefeatedBoss: 【未击败 Boss】
+		SymbolYes: "[√]"
+		SymbolNo: "[×]"
+		None: (无)
+	}
+
+	Tps: {
+		Desc: 查看服务器性能
+		OutputFormat:
+			'''
+			【服务器状态】
+			版本: {0}
+			世界: {1}
+			TPS: {2} / 60.0
+			在线: {3} 人
+			实体: {4} NPC / {5} Item
+			内存: {6} MB (GC: {7} MB)
+			'''
+	}
+}
+
+Hooks: {
+	Boss: {
+		Spawn: Boss {0} 出现了!
+		Kill: Boss {0} 被击败了!
+	}
+
+	World: {
+		Load: 服务器已启动
+		Unload: 服务器正在停止
+	}
+}
+
+Net: {
+	Connecting: "[TerraNoneBridge] 正在连接到 {0}..."
+	Connected: "[TerraNoneBridge] 已连接！等待鉴权..."
+	ConnectFail: "[TerraNoneBridge] 连接失败: {0}"
+	AuthSuccess: "[TerraNoneBridge] 鉴权成功！"
+	AuthFail: "[TerraNoneBridge] 鉴权失败: {0}"
+	MotdEstablished: 连接建立
+	Disconnected: "[TerraNoneBridge] 连接已断开。"
+	ReconnectingIn: "[TerraNoneBridge] 连接断开，将在 {0} 秒后重试..."
+	ReconnectDisabled: "[TerraNoneBridge] 连接断开。自动重连已禁用。"
+	EnvironmentUnsafe: 错误: 服务器负载过高或无响应，已拒绝执行修改性指令。
+}
+
+Services: {
+	Item: {
+		Header: 【{0}】 (ID: {1})
+		Source: 来源: {0}
+		StatsHeader: 【基础属性】 {0}
+
+		Stats: {
+			Damage: 伤害:{0}
+			Defense: 防御:{0}
+			Crit: 暴击:{0}%
+			Speed: 速度:{0}
+			Value: 价值:{0}
+			Knockback: 击退:{0}({1})
+
+			KnockbackLevel: {
+				None: 无
+				VeryWeak: 极弱
+				Weak: 较弱
+				Average: 普通
+				Strong: 较强
+				VeryStrong: 极强
+				Insane: 疯狂
+			}
+		}
+
+		// [New] Currency Units
+		Currency: {
+			Platinum: 铂金币
+			Gold: 金币
+			Silver: 银币
+			Copper: 铜币
+		}
+
+		Desc:
+			'''
+			【物品描述】
+			{0}
+			'''
+		DroppedByHeader: 【掉落来源】
+		SoldByHeader: 【购买来源】
+		RecipeHeader: 【合成配方】 (共{0}种):
+		RecipeRow: - {0} @ {1} -> {2}个
+		RecipeRowDetailed: - {0} @ {1}{2} -> {3}个
+		NoRecipe: 此物品无法合成，且无已知掉落/售卖来源。
+		TileWorkbench: 工作台
+		TileHand: 徒手
+	}
+
+	Player: {
+		Header: === 玩家: {0} ===
+		// 为了安全起见，包含大量符号的行建议加引号
+		SubHeader: 生命: {0}/{1} | 魔力: {2}/{3} | 防御: {4}
+		EquipHeader: 【当前装备】
+		Armor: "  护甲: {0}"
+		Accessories: "  配饰: {0}"
+		Misc: "  其他: {0}"
+		InvHeader: 【物品背包】
+		Coins: "  钱币: {0}"
+		Ammo: "  弹药: {0}"
+		Hotbar: "  快捷栏: {0}"
+		Main: "  物品: {0}"
+		VoidHeader: 【虚空保险库】
+		BankHeader: 【个人存储】
+		BankPig: "  [猪猪存钱罐] {0}"
+		BankSafe: "  [保险箱] {0}"
+		BankForge: "  [护卫熔炉] {0}"
+		Empty: (空)
+	}
+}

@@ -1,0 +1,4 @@
+displayName = TerraNoneBridge - 泰拉群服互通
+author = newcovid
+version = 0.8.5
+side = Both

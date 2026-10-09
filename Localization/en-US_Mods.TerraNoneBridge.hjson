@@ -1,0 +1,355 @@
+Configs: {
+	ServerConfig: {
+		DisplayName: TerraLink Server Config
+
+		Headers: {
+			ConnectionSettings: Connection Settings
+			FeatureSwitches: Feature Switches
+			ExportSettings: Export Settings
+		}
+
+		IpAddress: {
+			Label: WebSocket Address
+			Tooltip: IP address listened by Nonebot plugin
+		}
+
+		Port: {
+			Label: WebSocket Port
+			Tooltip: Port configured in Nonebot plugin (1-65535)
+		}
+
+		AccessToken: {
+			Label: Access Token
+			Tooltip: Must match the Key in Nonebot .env for authentication
+		}
+
+		ReconnectInterval: {
+			Label: Reconnect Interval (Seconds)
+			Tooltip: Wait time before retrying after disconnection. Set to 0 to disable auto-reconnect.
+		}
+
+		EnableChatSync: {
+			Label: Enable Chat Sync
+			Tooltip: Allow syncing QQ group messages with in-game chat
+		}
+
+		EnableEventBroadcast: {
+			Label: Enable Event Broadcast
+			Tooltip: Broadcast system events like player join/leave, world load
+		}
+
+		CustomExportPath: {
+			Label: Custom Export Path
+			Tooltip:
+				'''
+				Target directory for /tnb exportassets command.
+				Empty: Default to "TerraNoneBridge_Exports/Timestamp" (Creates new folder each time)
+				Path: Export to specific folder (Good for overwriting). Supports relative path (to tModLoader save) or absolute path.
+				'''
+		}
+	}
+}
+
+Common: {
+	Day: Day
+	Night: Night
+	Unknown: Unknown
+	None: (None)
+	Empty: (Empty)
+
+	Difficulty: {
+		Normal: Normal
+		Hardmode: Hardmode
+		Expert: Expert
+		Master: Master
+	}
+}
+
+MoonPhase: {
+	0: Full Moon
+	1: Waning Gibbous
+	2: Third Quarter
+	3: Waning Crescent
+	4: New Moon
+	5: Waxing Crescent
+	6: First Quarter
+	7: Waxing Gibbous
+}
+
+Log: {
+	CommandRegistered: "[TerraNoneBridge] Registered command: /{0} (IsModify: {1})"
+	CommandExecError: Command {0} Execution Error: {1}
+	PacketError: Packet Error: {0}
+	PacketDispatchError: Packet Dispatch Error: {0}
+	MainThreadPacketError: MainThread Packet Error: {0}
+	BossChecklistError: BossChecklist Integration Failed: {0}
+}
+
+Commands: {
+	Tnb: {
+		Desc: TerraNoneBridge Main Command. Type /tnb help for sub-commands.
+		UsageHint: Please enter a sub-command. E.g., /tnb help, /tnb tps
+	}
+
+	Common: {
+		ServerName: Server
+		Unknown: Unknown
+		NoPermission: You do not have permission to perform this action.
+		PlayerNotFound: Player not found: {0}
+		PlayerNotOnline: Player is not online.
+		ItemNotFound: Item not found: {0}
+		BuffNotFound: Buff not found: {0}
+		InvalidArgs: Invalid arguments.
+		MultiResult: Multiple results found, please be more specific or use ID: {0}
+		ExecError: Execution Error: {0}
+		UnknownCommand: Unknown Command: {0} (Type /tnb help for list)
+	}
+
+	// --- Management Commands ---
+	
+	Export: {
+		Desc: Export game assets
+		Usage: Usage: /tnb exportassets (Configure path in Mod Config)
+		ErrorServer: Error: Cannot export assets on Dedicated Server (No Textures). Use Host&Play.
+		Busy: Export is already in progress, please wait.
+		Start: Exporting assets... Path: {1}
+		Progress: Progress: {0}% ({1}/{2})
+		Complete: Export Complete! Processed {0} files. Saved to: {1}
+		ErrorCreateDir: Error creating directory: {0}
+		CopyrightNotice:
+			'''
+			WARNING: COPYRIGHT NOTICE
+			=========================
+			The assets contained in this folder are property of Re-Logic (Terraria) 
+			or their respective Mod authors.
+
+			Do NOT distribute these assets illegally.
+			These files are exported for educational, research, or personal usage only.
+			'''
+		ModeAll: (All Assets)
+		ModeCore: (Core Assets Only: Item/NPC/Buff)
+	}
+
+	Buff: {
+		Desc: Apply buff to player
+		Usage: Usage: /tnb buff <player/all> <buff name/id> [duration(s)]
+		Success: Applied [{1}] to {0} ({2}s)
+	}
+
+	Butcher: {
+		Desc: Kill all hostile NPCs
+		Success: Butchered {0} hostile NPCs.
+	}
+
+	Give: {
+		Desc: Give item to player
+		Usage: Usage: /tnb give <player> <item name> [amount]
+		Success: Gave {0} {1} [{2}]
+		NoItem: Item not found.
+		Multiple: Multiple items found, please be more specific: {0}
+	}
+
+	Kick: {
+		Desc: Kick a player
+		Usage: Usage: /tnb kick <player> [reason]
+		Success: Kicked player: {0}
+		ReasonDefault: Removed by administrator
+		DefaultReason: Removed by administrator
+	}
+
+	Save: {
+		Desc: Save the world
+		Success: World saved successfully.
+	}
+
+	Settle: {
+		Desc: Settle liquids immediately
+		Success: Liquids have been settled.
+	}
+
+	Time: {
+		Desc: Change world time
+		Usage: Usage: dawn, noon, dusk, midnight
+		Success: Time updated: {0}
+		Set: Time set to {0}.
+		Query: Current Time: {0} ({1}) | Moon: {2}
+	}
+
+	Heal: {
+		SuccessSingle: Healed: {0}
+		SuccessAll: Healed all players.
+	}
+
+	// --- Info Commands ---
+	
+	Help: {
+		Desc: Show help menu
+		Header: === TerraLink Command List ===
+		NotFound: Command not found: {0}
+	}
+
+	Inv: {
+		Desc: View player inventory
+		Usage: Usage: /tnb inv <player>
+		NotOnline: Player is not online.
+		Header: Inventory of {0}:
+	}
+
+	List: {
+		Desc: List online players
+		Empty: No players online.
+		Header: Online ({0}/{1}): {2}
+	}
+
+	Search: {
+		Desc: Search for Items or Buff IDs
+		Usage: Usage: /tnb search <keyword>
+		HeaderItem: Items ({0}):
+		HeaderBuff: Buffs ({0}):
+		None: No items or buffs found matching '{0}'.
+		Hint: Hint: Use /tnb query <ID> for details, or /tnb buff <player> <ID> to apply.
+		Found: Found {0} results:
+	}
+
+	Query: {
+		Desc: Query item details and recipes
+		Usage: Usage: /tnb query <name/id>
+		Success: Query Successful
+		Multiple:
+			'''
+			Multiple items found, please use ID:
+			{0}
+			'''
+	}
+
+	Recipe: {
+		Desc: Query item recipes and usages
+		Success: Query Successful
+	}
+
+	Boss: {
+		Desc: View boss progression
+		Header: === {0} Progress Report ===
+		Mode: Mode: {0}
+		ModeHard: Hardmode
+		ModePre: Pre-Hardmode
+		ModeExpert: " | Expert"
+		ModeMaster: " | Master"
+		SourceMod: "[Source: BossChecklist]"
+		SourceVanilla: "[Source: Vanilla]"
+		ListDefeatedBoss: "[Defeated Bosses]"
+		ListUndefeatedBoss: "[Undefeated Bosses]"
+		SymbolYes: "[x]"
+		SymbolNo: "[ ]"
+		None: (None)
+	}
+
+	Tps: {
+		Desc: Check server performance
+		OutputFormat:
+			'''
+			[Server Status]
+			Version: {0}
+			World: {1}
+			TPS: {2} / 60.0
+			Online: {3} players
+			Entities: {4} NPCs / {5} Items
+			Memory: {6} MB (GC: {7} MB)
+			'''
+	}
+}
+
+Hooks: {
+	Boss: {
+		Spawn: Boss {0} has appeared!
+		Kill: Boss {0} has been defeated!
+	}
+
+	World: {
+		Load: Server Started
+		Unload: Server Stopping
+	}
+}
+
+Net: {
+	Connecting: "[TerraNoneBridge] Connecting to {0}..."
+	Connected: "[TerraNoneBridge] Connected! Waiting for authentication..."
+	ConnectFail: "[TerraNoneBridge] Connection failed: {0}"
+	AuthSuccess: "[TerraNoneBridge] Authentication Successful!"
+	AuthFail: "[TerraNoneBridge] Authentication Failed: {0}"
+	MotdEstablished: Connection Established
+	Disconnected: "[TerraNoneBridge] Disconnected."
+	ReconnectingIn: "[TerraNoneBridge] Connection lost. Retrying in {0} seconds..."
+	ReconnectDisabled: "[TerraNoneBridge] Disconnected. Auto-reconnect is disabled."
+	EnvironmentUnsafe: Error: Server is unresponsive or lagging. Modification command rejected.
+}
+
+Services: {
+	Item: {
+		Header: "[{0}] (ID: {1})"
+		Source: Source: {0}
+		StatsHeader: "[Stats] {0}"
+
+		Stats: {
+			Damage: Dmg:{0}
+			Defense: Def:{0}
+			Crit: Crit:{0}%
+			Speed: Spd:{0}
+			Value: Val:{0}
+			Knockback: KB:{0}({1})
+
+			KnockbackLevel: {
+				None: None
+				VeryWeak: Very Weak
+				Weak: Weak
+				Average: Average
+				Strong: Strong
+				VeryStrong: Very Strong
+				Insane: Insane
+			}
+		}
+
+		// [New] Currency Units
+		Currency: {
+			Platinum: p
+			Gold: g
+			Silver: s
+			Copper: c
+		}
+
+		Desc:
+			'''
+			[Description]
+			{0}
+			'''
+		DroppedByHeader: "[Dropped By]"
+		SoldByHeader: "[Sold By]"
+		RecipeHeader: "[Recipes] (Total {0}):"
+		RecipeRow: - {0} @ {1} -> {2}
+		RecipeRowDetailed: - {0} @ {1}{2} -> {3}
+		NoRecipe: This item cannot be crafted, and has no known drop/shop source.
+		TileWorkbench: Workbench
+		TileHand: Hand
+	}
+
+	Player: {
+		Header: === Player: {0} ===
+		// 为了安全起见，包含大量符号的行建议加引号
+		SubHeader: Life: {0}/{1} | Mana: {2}/{3} | Def: {4}
+		EquipHeader: "[Equipment]"
+		Armor: "  Armor: {0}"
+		Accessories: "  Acc: {0}"
+		Misc: "  Misc: {0}"
+		InvHeader: "[Inventory]"
+		Coins: "  Coins: {0}"
+		Ammo: "  Ammo: {0}"
+		Hotbar: "  Hotbar: {0}"
+		Main: "  Main: {0}"
+		VoidHeader: "[Void Vault]"
+		BankHeader: "[Personal Storage]"
+		BankPig: "  [Piggy Bank] {0}"
+		BankSafe: "  [Safe] {0}"
+		BankForge: "  [Defender's Forge] {0}"
+		Empty: (Empty)
+	}
+}
