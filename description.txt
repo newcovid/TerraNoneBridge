@@ -4,19 +4,19 @@ TerraNoneBridge 是一个通过 WebSocket 协议将 tModLoader 服务器与 None
 
 主要功能概要：
 
-双向聊天同步：游戏内与 QQ 群消息实时互通。
+双向聊天同步：游戏内与 QQ 群消息实时互通，物品等聊天标签会转换为可读文字。
+
+分类播报：Boss、入侵、玩家死亡、加入离开、城镇 NPC、其他模组消息等可在模组配置中逐类开关，并支持关键词屏蔽。
 
 远程管理：在群内执行踢人、存档、修改时间、给予物品等管理操作。
 
 数据查询：随时查看服务器 TPS、在线玩家列表、背包详情及 Boss 击杀表。
 
-事件播报：自动推送服务器启停及 Boss 生成/击杀通知。
-
 使用注意：
 本模组主要作为通信端，需要配合 Nonebot2 插件才能完整工作。
 
-🔎 详细功能介绍、指令列表及插件下载请前往 GitHub 项目主页：
-https://github.com/newcovid/nonebot-plugin-terralink
+🔎 模组源码：https://github.com/newcovid/TerraNoneBridge
+🔎 Nonebot2 插件、指令列表与配置说明：https://github.com/newcovid/nonebot-plugin-terralink
 
 TerraNoneBridge - Terraria Group-Server Interconnect
 
@@ -24,16 +24,16 @@ TerraNoneBridge is a bridge mod that seamlessly connects a tModLoader server wit
 
 Key Features Summary:
 
-Two-way Chat Sync: Real-time communication between in-game chat and QQ groups.
+Two-way Chat Sync: Real-time communication between in-game chat and QQ groups; item and other chat tags become readable text.
+
+Categorized Broadcasts: Bosses, invasions, deaths, join/leave, town NPCs and other mods' messages can each be toggled in the mod config, with keyword blocking.
 
 Remote Management: Execute commands like kick, save, time change, and item giving from the group.
 
 Data Query: Check server TPS, player lists, inventories, and Boss kill progress.
 
-Event Broadcast: Auto-notifications for server status and Boss events.
-
 Note:
 This mod works as a communication bridge and requires the Nonebot2 plugin to function fully.
 
-🔎 For detailed features, command lists, and plugin downloads, please visit GitHub:
-https://github.com/newcovid/nonebot-plugin-terralink
+🔎 Mod source: https://github.com/newcovid/TerraNoneBridge
+🔎 Nonebot2 plugin, commands and setup guide: https://github.com/newcovid/nonebot-plugin-terralink

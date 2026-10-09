@@ -1,4 +1,6 @@
 displayName = TerraNoneBridge - 泰拉群服互通
 author = newcovid
-version = 0.8.5
+version = 0.9.0
 side = Both
+homepage = https://github.com/newcovid/TerraNoneBridge
+buildIgnore = *.md, LICENSE, changelog.txt, tools/*, Properties/*

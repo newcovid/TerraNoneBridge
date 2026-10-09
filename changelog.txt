@@ -1,0 +1,12 @@
+v0.9.0
+- 修复：EnableChatSync / EnableEventBroadcast 开关对发往 QQ 的消息不生效的问题。
+- 新增：系统播报分类开关（玩家进出、死亡、Boss、世界事件、城镇 NPC、其他模组、服务器状态）与屏蔽关键词 BlockedKeywords。
+- 优化：游戏内聊天中的物品、颜色等标签转换为可读文字后再转发。
+- 优化：修改播报开关不再触发重新连接。
+- 协议：chat 包新增 category 字段，需配合 nonebot-plugin-terralink 0.6.0 使用群内分类过滤（旧版插件仍可正常工作）。
+
+- Fixed: EnableChatSync / EnableEventBroadcast had no effect on messages sent to QQ.
+- Added: per-category broadcast switches (join/leave, deaths, bosses, world events, town NPCs, other mods, server status) and BlockedKeywords.
+- Improved: item, color and other chat tags are converted to readable text before forwarding.
+- Improved: changing broadcast switches no longer triggers a reconnect.
+- Protocol: chat packets now carry a category field; per-group filtering requires nonebot-plugin-terralink 0.6.0 (older plugin versions keep working).

@@ -1,7 +1,7 @@
 import asyncio
 import websockets
 import json
-import sys
+import uuid
 from datetime import datetime
 
 # ==========================================
@@ -46,19 +46,17 @@ async def handle_client(websocket):
                     await websocket.send(json.dumps(response))
                     log("已发送自动鉴权通过响应", "鉴权")
                     
-                elif msg_type == "log":
-                    log(f"{data.get('msg')}", "模组日志")
-                    
                 elif msg_type == "chat":
-                    log(f"<{data.get('nick')}> {data.get('msg')}", "聊天")
-                    
+                    category = data.get('category', '-')
+                    log(f"[{category}] <{data.get('user_name')}> {data.get('message')}", "聊天")
+
                 elif msg_type == "event":
-                    payload = data.get('payload', '')
-                    event_name = data.get('event_name', '事件')
-                    log(f"[{event_name}] {payload}", "事件")
-                    
-                elif msg_type == "response":
-                    log(f"{data.get('msg')}", "指令回执")
+                    log(f"[{data.get('event_type')}] {data.get('world_name')}: {data.get('motd')}", "事件")
+
+                elif msg_type == "command_response":
+                    log(f"[{data.get('status')}] {data.get('message')}", "指令回执")
+                    if data.get('data') is not None:
+                        log(json.dumps(data['data'], ensure_ascii=False), "指令数据")
                     
                 else:
                     log(f"原始数据包: {data}", "RAW")
@@ -84,7 +82,7 @@ async def send_packet(payload):
     
     try:
         await current_websocket.send(json.dumps(payload))
-        if payload.get('type') != 'cmd':
+        if payload.get('type') != 'command':
             log(f"已发送: {json.dumps(payload)}", "发送")
     except Exception as e:
         log(f"发送失败: {e}", "错误")
@@ -96,7 +94,7 @@ async def input_loop():
 
     while True:
         try:
-            cmd_input = await asyncio.get_event_loop().run_in_executor(None, input)
+            cmd_input = await asyncio.get_running_loop().run_in_executor(None, input)
         except EOFError:
             break
         
@@ -114,8 +112,8 @@ async def input_loop():
                 else:
                     await send_packet({
                         "type": "chat",
-                        "nick": parts[1],
-                        "msg": " ".join(parts[2:])
+                        "user_name": parts[1],
+                        "message": " ".join(parts[2:])
                     })
                     log(f"模拟群消息: [{parts[1]}] {' '.join(parts[2:])}", "测试")
             
@@ -154,7 +152,8 @@ async def input_loop():
             await send_packet({
                 "type": "command",
                 "command": cmd_name,
-                "args": cmd_args
+                "args": cmd_args,
+                "id": str(uuid.uuid4())
             })
             log(f"发送指令: {cmd_name} 参数: {cmd_args}", "指令输出")
 
@@ -181,8 +180,6 @@ async def main():
 
 if __name__ == "__main__":
     try:
-        if sys.platform == 'win32':
-            asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
         asyncio.run(main())
     except KeyboardInterrupt:
         print("\n服务器已停止。")
