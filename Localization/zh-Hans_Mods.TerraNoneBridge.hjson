@@ -5,6 +5,7 @@ Configs: {
 		Headers: {
 			ConnectionSettings: 连接设置
 			FeatureSwitches: 功能开关
+			BroadcastFilters: 播报分类过滤
 			ExportSettings: 资源导出设置
 		}
 
@@ -30,12 +31,52 @@ Configs: {
 
 		EnableChatSync: {
 			Label: 启用聊天同步
-			Tooltip: 是否允许 QQ 群消息与游戏内聊天互通
+			Tooltip: 玩家聊天双向互通总开关。关闭后游戏内玩家聊天不再发往 QQ，QQ 群消息也不再进入游戏。
 		}
 
 		EnableEventBroadcast: {
 			Label: 启用事件播报
-			Tooltip: 是否播报玩家加入、离开、世界加载等系统事件
+			Tooltip: 系统播报总开关。关闭后下方所有分类 (加入离开、死亡、Boss、世界事件、城镇 NPC、其他模组、服务器状态) 均不再发往 QQ。
+		}
+
+		BroadcastJoinLeave: {
+			Label: 玩家加入/离开
+			Tooltip: 例如: XXX 已加入。/ XXX 已离开。
+		}
+
+		BroadcastPlayerDeath: {
+			Label: 玩家死亡
+			Tooltip: 玩家角色死亡消息 (含其他模组自定义的死亡原因)
+		}
+
+		BroadcastBoss: {
+			Label: Boss 消息
+			Tooltip: Boss 苏醒/被打败，以及 "你感到有个邪恶的东西在看着你..." 等 Boss 预警
+		}
+
+		BroadcastWorldEvent: {
+			Label: 世界事件
+			Tooltip: 入侵 (哥布林/海盗等)、血月/日食、陨石、"四面回荡着尖叫声..." 等世界进度、玩家传送、PvP 切换等原版事件
+		}
+
+		BroadcastTownNpc: {
+			Label: 城镇 NPC
+			Tooltip: 城镇 NPC 到达、死亡与离开 (含旅商)
+		}
+
+		BroadcastOtherMods: {
+			Label: 其他模组消息
+			Tooltip: 其他模组发出的全服播报，例如伤害统计、自动钓鱼机提示等
+		}
+
+		BroadcastServerStatus: {
+			Label: 服务器状态
+			Tooltip: 服务器启动/停止通知，以及控制台 say 指令发出的消息
+		}
+
+		BlockedKeywords: {
+			Label: 屏蔽关键词
+			Tooltip: 发往 QQ 的消息 (含玩家聊天) 只要包含任一关键词就不会转发，不区分大小写。适合精确屏蔽某条刷屏提示。
 		}
 
 		CustomExportPath: {

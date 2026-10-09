@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using TerraNoneBridge.Core.Net;
 using TerraNoneBridge.Core.Config;
+using TerraNoneBridge.Core.Utils;
 using Terraria.Localization;
 
 namespace TerraNoneBridge.Core.Hooks
@@ -13,7 +14,7 @@ namespace TerraNoneBridge.Core.Hooks
     {
         public override void OnWorldLoad()
         {
-            if (ModContent.GetInstance<ServerConfig>().EnableEventBroadcast)
+            if (ModContent.GetInstance<ServerConfig>().IsCategoryEnabled(BroadcastCategory.Server))
             {
                 var socket = ModContent.GetInstance<SocketClient>();
                 socket.Send(new EventPacket("world_load")
@@ -26,7 +27,7 @@ namespace TerraNoneBridge.Core.Hooks
 
         public override void OnWorldUnload()
         {
-            if (ModContent.GetInstance<ServerConfig>().EnableEventBroadcast)
+            if (ModContent.GetInstance<ServerConfig>().IsCategoryEnabled(BroadcastCategory.Server))
             {
                 var socket = ModContent.GetInstance<SocketClient>();
                 socket.Send(new EventPacket("world_unload")

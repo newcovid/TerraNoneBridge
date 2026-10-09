@@ -5,6 +5,7 @@ Configs: {
 		Headers: {
 			ConnectionSettings: Connection Settings
 			FeatureSwitches: Feature Switches
+			BroadcastFilters: Broadcast Filters
 			ExportSettings: Export Settings
 		}
 
@@ -30,12 +31,52 @@ Configs: {
 
 		EnableChatSync: {
 			Label: Enable Chat Sync
-			Tooltip: Allow syncing QQ group messages with in-game chat
+			Tooltip: Master switch for two-way player chat. When off, in-game player chat is no longer sent to QQ and QQ group messages no longer enter the game.
 		}
 
 		EnableEventBroadcast: {
 			Label: Enable Event Broadcast
-			Tooltip: Broadcast system events like player join/leave, world load
+			Tooltip: Master switch for system broadcasts. When off, none of the categories below (join/leave, deaths, bosses, world events, town NPCs, other mods, server status) are sent to QQ.
+		}
+
+		BroadcastJoinLeave: {
+			Label: Player Join/Leave
+			Tooltip: e.g. XXX has joined. / XXX has left.
+		}
+
+		BroadcastPlayerDeath: {
+			Label: Player Deaths
+			Tooltip: Player death messages (including custom death reasons from other mods)
+		}
+
+		BroadcastBoss: {
+			Label: Boss Messages
+			Tooltip: Boss awakened/defeated, plus boss warnings such as "You feel an evil presence watching you..."
+		}
+
+		BroadcastWorldEvent: {
+			Label: World Events
+			Tooltip: Invasions (goblins, pirates...), Blood Moon/eclipse, meteors, world progression such as "Screams echo around you...", player teleports, PvP toggles and other vanilla events
+		}
+
+		BroadcastTownNpc: {
+			Label: Town NPCs
+			Tooltip: Town NPC arrivals, deaths and departures (including the Traveling Merchant)
+		}
+
+		BroadcastOtherMods: {
+			Label: Other Mod Messages
+			Tooltip: Server-wide broadcasts sent by other mods, such as damage reports or auto-fishing notices
+		}
+
+		BroadcastServerStatus: {
+			Label: Server Status
+			Tooltip: Server start/stop notices and messages sent with the console say command
+		}
+
+		BlockedKeywords: {
+			Label: Blocked Keywords
+			Tooltip: Messages sent to QQ (including player chat) are dropped if they contain any of these keywords (case-insensitive). Useful for muting one specific spammy notice.
 		}
 
 		CustomExportPath: {

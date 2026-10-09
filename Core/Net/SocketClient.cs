@@ -10,6 +10,7 @@ using System.Collections.Concurrent;
 using TerraNoneBridge.Core.Config;
 using TerraNoneBridge.Core.Hooks;
 using TerraNoneBridge.Core.Commands;
+using TerraNoneBridge.Core.Utils;
 using Terraria.Localization;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,18 @@ namespace TerraNoneBridge.Core.Net
         private ConcurrentQueue<Action> _mainThreadQueue = new ConcurrentQueue<Action>();
 
         private bool ShouldRun => Main.dedServ;
+
+        /// <summary>
+        /// 已连接且鉴权通过，可以向 Nonebot 推送消息。
+        /// </summary>
+        public bool IsConnected
+        {
+            get
+            {
+                var ws = _ws; // 连接线程可能随时将 _ws 置空
+                return _isAuthenticated && ws != null && ws.State == WebSocketState.Open;
+            }
+        }
 
         private const int UnsafeThresholdSeconds = 3;
 
@@ -183,7 +196,7 @@ namespace TerraNoneBridge.Core.Net
                     {
                         _isAuthenticated = true;
                         Mod.Logger.Info(Language.GetTextValue("Mods.TerraNoneBridge.Net.AuthSuccess"));
-                        if (ModContent.GetInstance<ServerConfig>().EnableEventBroadcast)
+                        if (ModContent.GetInstance<ServerConfig>().IsCategoryEnabled(BroadcastCategory.Server))
                         {
                             Send(new EventPacket("server_ready")
                             {

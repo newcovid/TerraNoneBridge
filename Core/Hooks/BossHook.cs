@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using TerraNoneBridge.Core.Net;
 using TerraNoneBridge.Core.Config;
+using TerraNoneBridge.Core.Utils;
 using Terraria.DataStructures;
 using Terraria.Localization;
 
@@ -14,7 +15,7 @@ namespace TerraNoneBridge.Core.Hooks
     {
         public override void OnSpawn(NPC npc, IEntitySource source)
         {
-            if (npc.boss && ModContent.GetInstance<ServerConfig>().EnableEventBroadcast)
+            if (npc.boss && ModContent.GetInstance<ServerConfig>().IsCategoryEnabled(BroadcastCategory.Boss))
             {
                 SendEvent("boss_spawn", Language.GetTextValue("Mods.TerraNoneBridge.Hooks.Boss.Spawn", npc.FullName));
             }
@@ -22,7 +23,7 @@ namespace TerraNoneBridge.Core.Hooks
 
         public override void OnKill(NPC npc)
         {
-            if (npc.boss && ModContent.GetInstance<ServerConfig>().EnableEventBroadcast)
+            if (npc.boss && ModContent.GetInstance<ServerConfig>().IsCategoryEnabled(BroadcastCategory.Boss))
             {
                 SendEvent("boss_kill", Language.GetTextValue("Mods.TerraNoneBridge.Hooks.Boss.Kill", npc.FullName));
             }

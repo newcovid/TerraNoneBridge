@@ -45,6 +45,9 @@ namespace TerraNoneBridge.Core.Net
         [JsonProperty("user_name")] public string UserName { get; set; }
         [JsonProperty("message")] public string Message { get; set; }
         [JsonProperty("color")] public string ColorHex { get; set; }
+
+        // 消息分类 (见 BroadcastCategory)，仅 TML -> Nonebot 方向携带
+        [JsonProperty("category", NullValueHandling = NullValueHandling.Ignore)] public string Category { get; set; }
     }
 
     // --- Command Packet (Incoming) ---
