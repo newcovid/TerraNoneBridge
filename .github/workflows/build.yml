@@ -37,7 +37,11 @@ jobs:
           EOF
 
       - name: Build mod
-        run: dotnet build TerraNoneBridge/TerraNoneBridge.csproj -c Release "-p:ExtraBuildModFlags=-tmlsavedirectory $GITHUB_WORKSPACE/tmlsave"
+        run: |
+          # 与 tModLoader 的 LaunchUtils/EnvironmentFix.sh 一致：打包时转换图标需要 FNA3D 原生库
+          export LD_LIBRARY_PATH="$GITHUB_WORKSPACE/tModLoader/Libraries/Native/Linux"
+          ln -sf "$LD_LIBRARY_PATH/libSDL2-2.0.so.0" "$LD_LIBRARY_PATH/libSDL2.so"
+          dotnet build TerraNoneBridge/TerraNoneBridge.csproj -c Release "-p:ExtraBuildModFlags=-tmlsavedirectory $GITHUB_WORKSPACE/tmlsave"
 
       - uses: actions/upload-artifact@v7
         with:
